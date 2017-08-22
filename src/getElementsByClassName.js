@@ -21,28 +21,17 @@ var getElementsByClassName = function(className,node){
   node = node || document.body;
     
     if (node.classList.contains(className)){
-        
-        for (var j = 0; j <= node.classList.length-1; j++){
-          
-
-          if (node.classList[j] === className){
+        nodes.push(node);
             
-            nodes.push(node);
-            
-          }
-        }     
     } 
-    if (node.childNodes){
-        for (var i = 0; i < node.childNodes.length-1; i++){
-          return getElementsByClassName(className, node.childNodes[i]);
-        }
-    }
-      
+    Array.from(node.children).forEach(function(element){
+        var childResults = getElementsByClassName(className, element);
+        //console.log(childResults);
+        nodes = nodes.concat(childResults);
+        //console.log(nodes);
+    });
+
     
-  
-  return nodes;
+    return nodes;
   
 };
-
-var expectedNodeList = document.getElementsByClassName(className);
-console.log(expectedNodeList);
